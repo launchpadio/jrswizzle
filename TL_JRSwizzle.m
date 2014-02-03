@@ -135,7 +135,7 @@
 + (void)tl_swizzleAllMethods:(NSArray *)selectors {
     for (NSString* selectorName in selectors) {
         SEL selector = NSSelectorFromString(selectorName);
-        SEL swizSelector = NSSelectorFromString([NSString stringWithFormat:@"tlSwizzle_%@", selectorName]);
+        SEL swizSelector = NSSelectorFromString([NSString stringWithFormat:@"tlsw_%@", selectorName]);
         if (selector && swizSelector) {
             NSError* err = nil;
             [self tl_jr_swizzleMethod:selector withMethod:swizSelector error:&err];
