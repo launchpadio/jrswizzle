@@ -4,6 +4,7 @@
 //   https://github.com/rentzsch/jrswizzle
 
 #import "TL_JRSwizzle.h"
+#import "TLLoggingTools.h"
 
 #if TARGET_OS_IPHONE
 	#import <objc/runtime.h>
@@ -129,6 +130,22 @@
 
 + (BOOL)tl_jr_swizzleClassMethod:(SEL)origSel_ withClassMethod:(SEL)altSel_ error:(NSError**)error_ {
 	return [GetClass((id)self) tl_jr_swizzleMethod:origSel_ withMethod:altSel_ error:error_];
+}
+
++ (void)tl_swizzleAllMethods:(NSArray *)selectors {
+    for (NSString* selectorName in selectors) {
+        SEL selector = NSSelectorFromString(selectorName);
+        SEL swizSelector = NSSelectorFromString([NSString stringWithFormat:@"tlSwizzle_%@", selectorName]);
+        if (selector && swizSelector) {
+            NSError* err = nil;
+            [self tl_jr_swizzleMethod:selector withMethod:swizSelector error:&err];
+            if (err) {
+#if TL_DEBUG
+                NSLog(@"Taplytics Error: Swizzling %@ method: %@", NSStringFromClass(self.class), selectorName);
+#endif
+            }
+        }
+    }
 }
 
 @end

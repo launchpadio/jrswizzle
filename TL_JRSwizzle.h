@@ -10,4 +10,6 @@
 + (BOOL)tl_jr_swizzleMethod:(SEL)origSel_ withMethod:(SEL)altSel_ error:(NSError**)error_;
 + (BOOL)tl_jr_swizzleClassMethod:(SEL)origSel_ withClassMethod:(SEL)altSel_ error:(NSError**)error_;
 
++ (void)tl_swizzleAllMethods:(NSArray*)selectors;
+
 @end
