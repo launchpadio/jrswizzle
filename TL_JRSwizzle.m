@@ -5,6 +5,7 @@
 
 #import "TL_JRSwizzle.h"
 #import "TLLoggingTools.h"
+#import "TLManager.h"
 
 #if TARGET_OS_IPHONE
 	#import <objc/runtime.h>
@@ -31,6 +32,8 @@
 @implementation NSObject (TL_JRSwizzle)
 
 + (BOOL)tl_jr_swizzleMethod:(SEL)origSel_ withMethod:(SEL)altSel_ error:(NSError**)error_ {
+    if (![TLManager sharedManager].isActive) return NO;
+
 #if OBJC_API_VERSION >= 2
 	Method origMethod = class_getInstanceMethod(self, origSel_);
 	if (!origMethod) {
@@ -133,6 +136,8 @@
 }
 
 + (void)tl_swizzleAllMethods:(NSArray *)selectors {
+    if (![TLManager sharedManager].isActive) return;
+
     for (NSString* selectorName in selectors) {
         SEL selector = NSSelectorFromString(selectorName);
         SEL swizSelector = NSSelectorFromString([NSString stringWithFormat:@"tlsw_%@", selectorName]);
