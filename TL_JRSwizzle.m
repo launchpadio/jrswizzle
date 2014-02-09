@@ -145,9 +145,7 @@
             NSError* err = nil;
             [self tl_jr_swizzleMethod:selector withMethod:swizSelector error:&err];
             if (err) {
-#if TL_DEBUG
-                NSLog(@"Taplytics Error: Swizzling %@ method: %@", NSStringFromClass(self.class), selectorName);
-#endif
+                [TLLoggingTools logError:err description:[NSString stringWithFormat:@"Swizzling %@ method: %@", NSStringFromClass(self.class), selectorName]];
             }
         }
     }
