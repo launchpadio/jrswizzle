@@ -8,8 +8,10 @@
 @interface NSObject (TL_JRSwizzle)
 
 + (BOOL)tl_jr_swizzleMethod:(SEL)origSel_ withMethod:(SEL)altSel_ error:(NSError**)error_;
-+ (BOOL)tl_jr_swizzleClassMethod:(SEL)origSel_ withClassMethod:(SEL)altSel_ error:(NSError**)error_;
++ (BOOL)tl_jr_swizzleMethod:(SEL)origSel_ withMethod:(SEL)altSel_ withClass:(Class)withClass error:(NSError**)error_;
++ (BOOL)tl_jr_swizzleClassMethod:(SEL)origSel_ withClassMethod:(SEL)altSel_ withClass:(Class)withClass error:(NSError**)error_;
 
++ (void)tl_swizzleAllClassMethods:(NSArray *)selectors fromClass:(id)fromClass;
 + (void)tl_swizzleAllMethods:(NSArray*)selectors;
 
 @end
