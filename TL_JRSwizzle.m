@@ -251,20 +251,28 @@
     }
 }
 
-+ (void)tl_swizzleAllMethods:(NSArray *)selectors {
++ (void)tl_swizzleAllMethods:(NSArray *)selectors fromClass:(id)fromClass {
     if (![TLManager sharedManager].isActive) return;
-
+    
     for (NSString* selectorName in selectors) {
         SEL selector = NSSelectorFromString(selectorName);
         SEL swizSelector = NSSelectorFromString([NSString stringWithFormat:@"tlsw_%@", selectorName]);
         if (selector && swizSelector) {
             NSError* err = nil;
-            [self tl_jr_swizzleMethod:selector withMethod:swizSelector error:&err];
+            if (fromClass)
+                [self tl_jr_swizzleMethod:selector withMethod:swizSelector withClass:GetClass((id)fromClass) error:&err];
+            else
+                [self tl_jr_swizzleMethod:selector withMethod:swizSelector error:&err];
+
             if (err) {
                 [TLLoggingTools logError:err description:[NSString stringWithFormat:@"Swizzling %@ method: %@", NSStringFromClass(self.class), selectorName]];
             }
         }
     }
+}
+
++ (void)tl_swizzleAllMethods:(NSArray *)selectors {
+    [self tl_swizzleAllMethods:selectors fromClass:nil];
 }
 
 @end

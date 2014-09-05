@@ -12,6 +12,7 @@
 + (BOOL)tl_jr_swizzleClassMethod:(SEL)origSel_ withClassMethod:(SEL)altSel_ withClass:(Class)withClass error:(NSError**)error_;
 
 + (void)tl_swizzleAllClassMethods:(NSArray *)selectors fromClass:(id)fromClass;
-+ (void)tl_swizzleAllMethods:(NSArray*)selectors;
++ (void)tl_swizzleAllMethods:(NSArray *)selectors fromClass:(id)fromClass;
++ (void)tl_swizzleAllMethods:(NSArray *)selectors;
 
 @end
