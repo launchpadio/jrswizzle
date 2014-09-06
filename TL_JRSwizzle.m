@@ -148,7 +148,7 @@
 	Method altMethod = class_getInstanceMethod(withClass, altSel_);
 	if (!altMethod) {
 #if TARGET_OS_IPHONE
-		SetNSError(error_, @"alternate method %@ not found for class %@", NSStringFromSelector(altSel_), [self class]);
+		SetNSError(error_, @"alternate method %@ not found for class %@", NSStringFromSelector(altSel_), withClass);
 #else
 		SetNSError(error_, @"alternate method %@ not found for class %@", NSStringFromSelector(altSel_), [self className]);
 #endif
@@ -260,7 +260,7 @@
         if (selector && swizSelector) {
             NSError* err = nil;
             if (fromClass)
-                [self tl_jr_swizzleMethod:selector withMethod:swizSelector withClass:GetClass((id)fromClass) error:&err];
+                [self tl_jr_swizzleMethod:selector withMethod:swizSelector withClass:GetClass(fromClass) error:&err];
             else
                 [self tl_jr_swizzleMethod:selector withMethod:swizSelector error:&err];
 
