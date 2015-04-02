@@ -245,7 +245,7 @@
             NSError* err = nil;
             [self tl_jr_swizzleClassMethod:selector withClassMethod:swizSelector withClass:GetClass((id)fromClass) error:&err];
             if (err) {
-                [TLLog logError:err description:[NSString stringWithFormat:@"Swizzling %@ class method: %@", NSStringFromClass(self.class), selectorName]];
+                [TLLog logError:err description:@"Swizzling %@ class method: %@", NSStringFromClass(self.class), selectorName];
             }
         }
     }
@@ -265,7 +265,7 @@
                 [self tl_jr_swizzleMethod:selector withMethod:swizSelector error:&err];
 
             if (err) {
-                [TLLog logError:err description:[NSString stringWithFormat:@"Swizzling %@ method: %@", NSStringFromClass(self.class), selectorName]];
+                [TLLog logError:err description:@"Swizzling %@ method: %@", NSStringFromClass(self.class), selectorName];
             }
         }
     }
