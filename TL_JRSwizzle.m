@@ -4,7 +4,7 @@
 //   https://github.com/rentzsch/jrswizzle
 
 #import "TL_JRSwizzle.h"
-#import "TLLoggingTools.h"
+#import "TLLog.h"
 #import "TLManager.h"
 
 #if TARGET_OS_IPHONE
@@ -245,7 +245,7 @@
             NSError* err = nil;
             [self tl_jr_swizzleClassMethod:selector withClassMethod:swizSelector withClass:GetClass((id)fromClass) error:&err];
             if (err) {
-                [TLLoggingTools logError:err description:[NSString stringWithFormat:@"Swizzling %@ class method: %@", NSStringFromClass(self.class), selectorName]];
+                [TLLog logError:err description:[NSString stringWithFormat:@"Swizzling %@ class method: %@", NSStringFromClass(self.class), selectorName]];
             }
         }
     }
@@ -265,7 +265,7 @@
                 [self tl_jr_swizzleMethod:selector withMethod:swizSelector error:&err];
 
             if (err) {
-                [TLLoggingTools logError:err description:[NSString stringWithFormat:@"Swizzling %@ method: %@", NSStringFromClass(self.class), selectorName]];
+                [TLLog logError:err description:[NSString stringWithFormat:@"Swizzling %@ method: %@", NSStringFromClass(self.class), selectorName]];
             }
         }
     }
