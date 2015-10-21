@@ -241,12 +241,13 @@
     for (NSString* selectorName in selectors) {
         SEL selector = NSSelectorFromString(selectorName);
         SEL swizSelector = NSSelectorFromString([NSString stringWithFormat:@"tlsw_%@", selectorName]);
+        
         if (selector && swizSelector) {
             NSError* err = nil;
             [self tl_jr_swizzleClassMethod:selector withClassMethod:swizSelector withClass:GetClass((id)fromClass) error:&err];
-            if (err) {
-                [TLLog logError:err description:@"Swizzling %@ class method: %@", NSStringFromClass(self.class), selectorName];
-            }
+            
+            if (err)
+                [TLLog logErrorDontReport:err description:@"Swizzling %@ class method: %@", NSStringFromClass(self.class), selectorName];
         }
     }
 }
@@ -257,6 +258,7 @@
     for (NSString* selectorName in selectors) {
         SEL selector = NSSelectorFromString(selectorName);
         SEL swizSelector = NSSelectorFromString([NSString stringWithFormat:@"tlsw_%@", selectorName]);
+        
         if (selector && swizSelector) {
             NSError* err = nil;
             if (fromClass)
@@ -264,9 +266,8 @@
             else
                 [self tl_jr_swizzleMethod:selector withMethod:swizSelector error:&err];
 
-            if (err) {
-                [TLLog logError:err description:@"Swizzling %@ method: %@", NSStringFromClass(self.class), selectorName];
-            }
+            if (err)
+                [TLLog logErrorDontReport:err description:@"Swizzling %@ method: %@", NSStringFromClass(self.class), selectorName];
         }
     }
 }
