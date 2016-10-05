@@ -240,7 +240,7 @@
     
     for (NSString* selectorName in selectors) {
         SEL selector = NSSelectorFromString(selectorName);
-        SEL swizSelector = NSSelectorFromString([NSString stringWithFormat:@"tlsw_%@", selectorName]);
+        SEL swizSelector = NSSelectorFromString([@"tlsw_" stringByAppendingString:selectorName]);
         
         if (selector && swizSelector) {
             NSError* err = nil;
@@ -257,7 +257,7 @@
     
     for (NSString* selectorName in selectors) {
         SEL selector = NSSelectorFromString(selectorName);
-        SEL swizSelector = NSSelectorFromString([NSString stringWithFormat:@"tlsw_%@", selectorName]);
+        SEL swizSelector = NSSelectorFromString([@"tlsw_" stringByAppendingString:selectorName]);
         
         if (selector && swizSelector) {
             NSError* err = nil;
