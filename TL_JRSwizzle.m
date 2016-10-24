@@ -238,22 +238,25 @@
 + (void)tl_swizzleAllClassMethods:(NSArray *)selectors fromClass:(id)fromClass {
     if (![TLManager sharedManager].isActive) return;
     
+    Class fromClassName = GetClass((id)fromClass);
+    
     for (NSString* selectorName in selectors) {
         SEL selector = NSSelectorFromString(selectorName);
         SEL swizSelector = NSSelectorFromString([@"tlsw_" stringByAppendingString:selectorName]);
         
         if (selector && swizSelector) {
             NSError* err = nil;
-            [self tl_jr_swizzleClassMethod:selector withClassMethod:swizSelector withClass:GetClass((id)fromClass) error:&err];
+            [self tl_jr_swizzleClassMethod:selector withClassMethod:swizSelector withClass:fromClassName error:&err];
             
-            if (err)
-                [TLLog logErrorDontReport:err description:@"Swizzling %@ class method: %@", NSStringFromClass(self.class), selectorName];
+            if (err) TLLog_ErrorDontReport(err, @"Swizzling %@ class method: %@", NSStringFromClass(fromClassName), selectorName);
         }
     }
 }
 
 + (void)tl_swizzleAllMethods:(NSArray *)selectors fromClass:(id)fromClass {
     if (![TLManager sharedManager].isActive) return;
+    
+    Class fromClassName = GetClass(fromClass);
     
     for (NSString* selectorName in selectors) {
         SEL selector = NSSelectorFromString(selectorName);
@@ -262,12 +265,11 @@
         if (selector && swizSelector) {
             NSError* err = nil;
             if (fromClass)
-                [self tl_jr_swizzleMethod:selector withMethod:swizSelector withClass:GetClass(fromClass) error:&err];
+                [self tl_jr_swizzleMethod:selector withMethod:swizSelector withClass:fromClassName error:&err];
             else
                 [self tl_jr_swizzleMethod:selector withMethod:swizSelector error:&err];
 
-            if (err)
-                [TLLog logErrorDontReport:err description:@"Swizzling %@ method: %@", NSStringFromClass(self.class), selectorName];
+            if (err) TLLog_ErrorDontReport(err, @"Swizzling %@ method: %@", NSStringFromClass(fromClassName), selectorName);
         }
     }
 }
